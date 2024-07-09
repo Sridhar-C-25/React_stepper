@@ -8,7 +8,10 @@
   @apply w-10 h-10 flex items-center justify-center z-10 relative bg-slate-700 rounded-full font-semibold text-white;
 }
 .active .step {
-  @apply bg-sky-600;
+  @apply bg-sky-600 ;
+}
+.active p {
+  @apply text-blue-300 ;
 }
 .complete .step {
   @apply bg-green-600;
@@ -19,4 +22,10 @@
 .complete:not(:first-child):before,
 .active:not(:first-child):before {
   @apply bg-green-600;
+}
+@media screen and (max-width:767px) {
+  .step-item:not(:first-child):before {
+    
+  @apply content-[''] bg-slate-200 absolute w-full h-[3px] right-2/4 top-1/3 -translate-y-2/4 hidden m-10;
+  }
 }

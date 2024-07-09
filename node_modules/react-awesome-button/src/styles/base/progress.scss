@@ -1,0 +1,106 @@
+.#{$button-root} {
+  &--progress {
+    .#{$button-root}__progress {
+      position: relative;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      border-radius: $button-default-border-radius;
+      text-indent: 0;
+      z-index: 3;
+      overflow: hidden;
+      transition: border var(--transform-speed) ease-out,
+        transform var(--transform-speed) ease-out,
+        background var(--transform-speed) ease-out,
+        color var(--transform-speed) ease-out;
+      > span {
+        transition: opacity calc(var(--transform-speed) * 0.5) ease-out
+          calc(var(--transform-speed) * 0.75);
+      }
+      &:before,
+      &:after {
+        @extend %fill-parent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.65);
+        opacity: 0;
+        transition: transform var(--transform-speed) ease-out 0.05s,
+          opacity calc(var(--transform-speed) * 0.75) ease-out 0.05s;
+      }
+      &:before {
+        content: attr(data-loading);
+        display: none;
+        transform: translate3d(0, 50%, 0);
+      }
+      &:after {
+        content: attr(data-status);
+        display: none;
+        transform: translate3d(0, -50%, 0);
+      }
+    }
+    &.#{$button-root}--active {
+      .#{$button-root}__progress {
+        > span {
+          opacity: 0.075;
+        }
+      }
+      .#{$button-root}__progress:after,
+      .#{$button-root}__progress:before,
+      .#{$button-root}__content:after {
+        display: block;
+      }
+    }
+    .#{$button-root}__content {
+      &:after {
+        @extend %fill-parent;
+        content: " ";
+        background-color: rgba(0, 0, 0, 0.15);
+        transform: translate3d(-100%, 0, 0);
+        width: 100%;
+        display: none;
+      }
+    }
+  }
+  &--start {
+    .#{$button-root}__progress {
+      &:before {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    .#{$button-root}__content {
+      &:after {
+        transition: transform var(--loading-transition-speed) ease-out;
+        transform: translate3d(-15%, 0, 0);
+      }
+    }
+  }
+  &--errored {
+    .#{$button-root}__content {
+      &:after {
+        background-color: rgba(255, 0, 0, 0.75);
+      }
+    }
+  }
+  &--end {
+    .#{$button-root}__content {
+      &:after {
+        transition: transform var(--loading-transition-end-speed)
+          var(--loading-transition-timing);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    .#{$button-root}__progress {
+      &:after {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      &:before {
+        transform: translate3d(0, 50%, 0);
+        opacity: 0;
+      }
+    }
+  }
+}
